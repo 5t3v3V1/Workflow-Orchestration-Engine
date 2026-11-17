@@ -41,8 +41,8 @@ def upgrade() -> None:
     sa.Column('worker_id', sa.String(length=258), nullable=True),
     sa.Column('claim_generation', sa.Integer(), server_default=sa.text("0"), nullable=False),
     sa.Column('lease_expires_at', sa.DateTime(timezone=True), nullable=True),
-    sa.Column('created_at', sa.DateTime(timezone=True), nullable=False),
-    sa.Column('updated_at', sa.DateTime(timezone=True), nullable=False),
+    sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text("CURRENT_TIMESTAMP"), nullable=False),
+    sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text("CURRENT_TIMESTAMP"), nullable=False),
     sa.CheckConstraint('attempts >= 0', name='ck_jobs_attempts'),
     sa.CheckConstraint('max_attempts >= 1', name='ck_jobs_max_attempts'),
     sa.PrimaryKeyConstraint('id')

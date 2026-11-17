@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime, UTC
 from typing import Any
 
-from sqlalchemy import DateTime, String, Integer, CheckConstraint
+from sqlalchemy import DateTime, String, Integer, CheckConstraint, func
 from sqlalchemy import Enum as SQLEnum
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import Mapped, mapped_column
@@ -67,12 +67,12 @@ class Job(Base):
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=lambda: datetime.now(UTC),
+        server_default=func.now(),
         nullable=False
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=lambda: datetime.now(UTC),
+        server_default=func.now(),
         onupdate=lambda: datetime.now(UTC),
         nullable=False
     )
